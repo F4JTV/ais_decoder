@@ -126,39 +126,6 @@ Notes:
 - Records are line-delimited: the collector should read and parse one line at
   a time.
 
-## 6. Collector side
-
-The module acts as a TCP **client**; the collector must run a TCP **server**.
-The server must accept multiple simultaneous connections if you run more than
-one module instance (one connection per instance). A minimal multi-client test
-server (`ais_test_server.py`) is provided alongside this module.
-
-```bash
-# Quick local test (prints each line, labelled by client):
-python3 ais_test_server.py 10110
-```
-
-Then point the module's TCP output to the server's IP and port (e.g.
-`127.0.0.1:10110`).
-
-> Tip: `nc -l` (and even `nc -k -l`) only relays one connection's output to the
-> terminal at a time, so it is not a reliable way to test two module instances.
-> Use the provided multi-client server instead.
-
-## 7. Validation
-
-Two test programs are included in the module folder (they are not part of the
-CMake build):
-
-- `test_decoder.cpp` -- encodes known AIS messages (type 1 position report,
-  type 5 static/voyage) into HDLC+NRZI channel bits, decodes them, and verifies
-  each parsed field, plus rejection of a CRC-corrupted frame:
-  ```bash
-  g++ -std=c++17 -I src -O2 test_decoder.cpp src/ais/decoder.cpp -o ais_test && ./ais_test
-  ```
-- `test_tcp.cpp` together with `test_server.py` -- exercises the TCP client
-  (connect, queueing, reconnect).
-
 ## Technical notes
 
 - **Bit order**: each AIS byte is transmitted LSB-first while the message is
