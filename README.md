@@ -26,8 +26,9 @@ The module is built in-tree, like the bundled `pager_decoder`.
 
 ```bash
 git clone https://github.com/AlexandreRouma/SDRPlusPlus.git
-cd SDRPlusPlus
-cp -r /path/to/ais_decoder decoder_modules/ais_decoder
+cd SDRPlusPlus/decoder_modules
+git clone https://github.com/F4JTV/ais_decoder
+cd ..
 ```
 
 Wire the module into the build. The following edits are already applied if you
@@ -46,12 +47,6 @@ In the second `# Decoders` section of the same file:
 if (OPT_BUILD_AIS_DECODER)
 add_subdirectory("decoder_modules/ais_decoder")
 endif (OPT_BUILD_AIS_DECODER)
-```
-
-In `core/src/core.cpp`, in the default module list:
-
-```cpp
-core::configManager.conf["modules"][modCount++] = "ais_decoder.so";
 ```
 
 ## 2. Dependencies (Ubuntu 24.04)
@@ -85,9 +80,9 @@ The plugin is produced as `ais_decoder.so` and installed into
 ## 4. Usage in SDR++
 
 1. Launch SDR++.
-2. If the module is not listed, open the **Module Manager**, select
+2. Open the **Module Manager**, select
    `ais_decoder`, give the instance a name (e.g. `AIS`), and click `+`.
-3. In the module menu:
+4. In the module menu:
    - Use the **AIS 1 / AIS 2** buttons to tune the VFO to either channel.
    - Under **TCP output**, set the collector host and port and tick
      *Send decoded contacts*. The connection status and the Sent/Dropped
