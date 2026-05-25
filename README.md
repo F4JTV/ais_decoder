@@ -31,10 +31,6 @@ git clone https://github.com/F4JTV/ais_decoder
 cd ..
 ```
 
-Wire the module into the build. The following edits are already applied if you
-use the provided package together with `apply_to_sdrpp.sh`. Otherwise, add them
-manually.
-
 In the top-level `CMakeLists.txt`, in the first `# Decoders` section:
 
 ```cmake
